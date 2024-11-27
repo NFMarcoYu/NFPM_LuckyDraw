@@ -30,7 +30,12 @@ def select_winners_with_effect():
         winners['Event Name'] = event_name
         result_text.delete('1.0', tk.END)
         result_text.insert(tk.END, winners.to_string(index=False))
-
+        # Save result to Excel
+        output_file = filedialog.asksaveasfilename(defaultextension=".xlsx", 
+                                                   filetypes=[("Excel files", "*.xlsx")])
+        if output_file:
+            winners.to_excel(output_file, index=False, engine='openpyxl')
+            messagebox.showinfo("Success", f"Results saved to {output_file}")
     except Exception as e:
         messagebox.showerror("Error", f"An error occurred: {e}")
 
